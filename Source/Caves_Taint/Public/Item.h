@@ -32,4 +32,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 equipmentIndex;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int32 stack;
 };

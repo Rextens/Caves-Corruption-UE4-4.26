@@ -2,7 +2,7 @@
 
 #include "BioProgrammator.h"
 #include "ProgrammerInterface.h"
-#include "StackableItem.h"
+#include "Item.h"
 #include "PlayerCharacter.h"
 
 ABioProgrammator::ABioProgrammator()
@@ -112,8 +112,7 @@ FItemSlotSaveStructArray ABioProgrammator::getItemsAsStruct_Implementation()
 		temp.stackable = saveItems[i]->stackable;
 		if (saveItems[i]->stackable)
 		{
-			UStackableItem* stackableItem = Cast<UStackableItem>(saveItems[i]);
-			temp.stack = stackableItem->stack;
+			temp.stack = saveItems[i]->stack;
 		}
 		tempArray.itemSlots.Add(temp);
 	}

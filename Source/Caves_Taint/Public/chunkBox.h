@@ -38,12 +38,12 @@ public:
 	UFUNCTION()
 		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	UFUNCTION()
-		void DestroyChunk();
+	UFUNCTION(BlueprintCallable)
+		void DestroyChunk(bool saveWithoutDestroying);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		FItemSlotSaveStruct convertItemToItemStruct(UItem *item);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		UItem* convertItemStructToItem(FItemSlotSaveStruct itemStruct);
 };

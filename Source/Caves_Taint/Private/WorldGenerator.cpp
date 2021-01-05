@@ -28,12 +28,16 @@ void FVoxelCavesWorldGeneratorInstance::Init(const FVoxelWorldGeneratorInit& Ini
 	if (loadWorldInstance)
 	{
 		Noise.SetSeed(loadWorldInstance->seed);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Some variable values: x: %i"), loadWorldInstance->seed));
 	}
 	else
 	{
 		static const FName SeedName = "MySeed";
 		srand(time(nullptr));
 		Noise.SetSeed(InitStruct.Seeds.Contains(SeedName) ? InitStruct.Seeds[SeedName] : rand());
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Couldn't load seed")));
 	}
 
 	seed = Noise.GetSeed();

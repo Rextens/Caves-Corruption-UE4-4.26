@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "StackableItem.h"
+#include "Item.h"
 #include "UIBase.h"
 #include "Equipment.generated.h"
 
@@ -17,8 +17,8 @@ class CAVES_TAINT_API UEquipment : public UUIBase
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable)
-		UStackableItem* getStackableReferenceInstead(UItem *item);
+	//UFUNCTION(BlueprintCallable)
+	//	UStackableItem* getStackableReferenceInstead(UItem *item);
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 		void addItemToDisplay(const TArray<UItem*>& VarName);

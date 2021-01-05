@@ -8,4 +8,6 @@ UItem::UItem()
 {
 	itemName = "notNUll";
 	placedItemClass = APlacedRock::StaticClass();
+	stack = 1;
+	stackable = true;
 }

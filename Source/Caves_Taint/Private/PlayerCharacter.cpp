@@ -331,12 +331,12 @@ void APlayerCharacter::addItemReferenceToEquipment(UItem* itemReference)
 	{
 		if (itemReference->stackable)
 		{
-			UStackableItem* stackableItem = NewObject<UStackableItem>();
+			UItem* stackableItem = NewObject<UItem>();
 
 			stackableItem->itemName = itemReference->itemName;
 			stackableItem->placedItemClass = itemReference->placedItemClass;
 
-			stackableItem->stack = Cast<UStackableItem>(itemReference)->stack;
+			stackableItem->stack = Cast<UItem>(itemReference)->stack;
 			itemsInEquipment.Add(stackableItem);
 			itemsInEquipment[itemsInEquipment.Num() - 1]->equipmentIndex = itemsInEquipment.Num() - 1;
 		}
@@ -357,7 +357,7 @@ void APlayerCharacter::insertItemToEquipment(FName objectID, UClass* objectClass
 {
 	if (stackable)
 	{
-		UStackableItem* stackableItem = NewObject<UStackableItem>();
+		UItem* stackableItem = NewObject<UItem>();
 
 		stackableItem->itemName = objectID;
 		stackableItem->placedItemClass = objectClass;
@@ -394,7 +394,7 @@ void APlayerCharacter::insertItemReferenceToEquipment(UItem* itemReference, int3
 {
 	if (itemReference->stackable)
 	{
-		UStackableItem* stackableItemReference = Cast<UStackableItem>(DuplicateObject<UItem>(itemReference, this));
+		UItem* stackableItemReference = Cast<UItem>(DuplicateObject<UItem>(itemReference, this));
 
 		itemsInEquipment.SetNum(itemsInEquipment.Num() + 1);
 
@@ -433,7 +433,7 @@ void APlayerCharacter::removeItemFromEquipment(int32 index, bool removeWholeStac
 		}
 		else
 		{
-			UStackableItem* stackableItemReference = Cast<UStackableItem>(itemsInEquipment[index]);
+			UItem* stackableItemReference = Cast<UItem>(itemsInEquipment[index]);
 			stackableItemReference->stack -= removeMoreThanOneItem;
 
 			if (stackableItemReference->stack == 0)
@@ -454,7 +454,7 @@ void APlayerCharacter::checkItemToRemove(int32 index)
 {
 	if (itemsInEquipment[index]->stackable)
 	{
-		UStackableItem* stackableItemReference = Cast<UStackableItem>(itemsInEquipment[index]);
+		UItem* stackableItemReference = Cast<UItem>(itemsInEquipment[index]);
 		if (stackableItemReference->stack == 0)
 		{
 			itemsInEquipment.RemoveAt(index);
@@ -534,7 +534,8 @@ void APlayerCharacter::removeChunks()
 			abs(floor(chunks[i]->GetActorLocation().Y / 4096.0f) - getPlayerCube().Y) > renderRadius ||
 			abs(floor(chunks[i]->GetActorLocation().Z / 4096.0f) - getPlayerCube().Z) > renderRadius)
 		{
-			chunks[i]->DestroyChunk();
+			chunks[i]->DestroyChunk(false);
+			chunks[i]->Destroy();
 			chunks.RemoveAt(i);
 		}
 	}

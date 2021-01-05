@@ -38,10 +38,9 @@ void AchunkBox::onSpawned()
 
 	USaveChunk* saveChunkInstance = Cast<USaveChunk>(UGameplayStatics::CreateSaveGameObject(USaveChunk::StaticClass()));
 	saveChunkInstance = Cast<USaveChunk>(UGameplayStatics::LoadGameFromSlot(savePath, 0));
+
 	if (saveChunkInstance)
 	{
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Num: %i"), saveChunkInstance->placedItems.Num()));
 		for (int i = 0; i < saveChunkInstance->placedItems.Num(); ++i)
 		{
 			FActorSpawnParameters SpawnInfo;
@@ -84,7 +83,7 @@ void AchunkBox::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 
 }
 
-void AchunkBox::DestroyChunk()
+void AchunkBox::DestroyChunk(bool saveWithoutDestroying)
 {
 	TArray<AActor*> actorsInChunk;
 	collisionBox->GetOverlappingActors(actorsInChunk, APlacedItem::StaticClass());
@@ -137,12 +136,13 @@ void AchunkBox::DestroyChunk()
 		UGameplayStatics::DeleteGameInSlot(savePath, 0);
 	}
 
-	for (int i = 0; i < actorsInChunk.Num(); ++i)
+	if (!saveWithoutDestroying)
 	{
-		actorsInChunk[i]->Destroy();
+		for (int i = 0; i < actorsInChunk.Num(); ++i)
+		{
+			actorsInChunk[i]->Destroy();
+		}
 	}
-
-	Destroy();
 }
 
 FItemSlotSaveStruct AchunkBox::convertItemToItemStruct(UItem* item)
@@ -153,8 +153,7 @@ FItemSlotSaveStruct AchunkBox::convertItemToItemStruct(UItem* item)
 	temp.stackable = item->stackable;
 	if (item->stackable)
 	{
-		UStackableItem* stackableItem = Cast<UStackableItem>(item);
-		temp.stack = stackableItem->stack;
+		temp.stack = item->stack;
 	}
 
 	return temp;
@@ -164,7 +163,7 @@ UItem* AchunkBox::convertItemStructToItem(FItemSlotSaveStruct itemStruct)
 {
 	if (itemStruct.stackable)
 	{
-		UStackableItem* stackableItem = NewObject<UStackableItem>();
+		UItem* stackableItem = NewObject<UItem>();
 		stackableItem->itemName = itemStruct.itemName;
 		stackableItem->placedItemClass = itemStruct.placedItemClass;
 		stackableItem->stackable = true;

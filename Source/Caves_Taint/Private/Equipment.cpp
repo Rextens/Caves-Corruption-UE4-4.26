@@ -3,10 +3,10 @@
 
 #include "Equipment.h"
 
-UStackableItem* UEquipment::getStackableReferenceInstead(UItem* item)
-{
-	return Cast<UStackableItem>(item); 
-}
+//UStackableItem* UEquipment::getStackableReferenceInstead(UItem* item)
+//{
+//	return Cast<UStackableItem>(item); 
+//}
 
 void UEquipment::addItemToDisplay_Implementation(const TArray<UItem*>& VarName)
 {

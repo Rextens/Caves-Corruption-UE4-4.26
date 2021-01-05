@@ -10,7 +10,7 @@
 #include "VoxelTools/VoxelDataTools.h"
 #include "VoxelData/VoxelData.h"
 #include "BioProgrammator.h"
-#include "StackableItem.h"
+#include "Item.h"
 #include "Equipment.h"
 #include "UsableItem.h"
 #include <map>
@@ -124,7 +124,7 @@ public:
 		{
 			if (stackable)
 			{
-				UStackableItem* stackableItem = NewObject<UStackableItem>();
+				UItem* stackableItem = NewObject<UItem>();
 
 				stackableItem->itemName = objectID;
 				stackableItem->placedItemClass = objectClass;
@@ -139,7 +139,7 @@ public:
 				}
 				else
 				{
-					Cast<UStackableItem>(itemsInEquipment[equipmentIndex])->stack += 1;
+					Cast<UItem>(itemsInEquipment[equipmentIndex])->stack += 1;
 				}
 			}
 			else
@@ -194,18 +194,19 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void checkChunks();
-
+		
 	UFUNCTION(BlueprintCallable)
 		void removeChunks();
 
 	UFUNCTION(BlueprintCallable)
 		int32 findChunk(FVector position);
-
-	TArray<AchunkBox*> chunks;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<AchunkBox*> chunks;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector lastChunk;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 renderRadius = 1;
+		int32 renderRadius = 3;
 };
