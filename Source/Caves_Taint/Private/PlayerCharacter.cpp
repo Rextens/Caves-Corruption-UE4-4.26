@@ -244,7 +244,6 @@ void APlayerCharacter::action()
 		{			
 			TArray<FModifiedVoxelValue> modifiedValues;
 
-			
 			UVoxelSphereTools::RemoveSphere(voxelWorldReference, hitResult.Location, 20.0f, &modifiedValues);
 			UVoxelSphereTools::SmoothSphere(voxelWorldReference, hitResult.Location, 20.0f, 1.0f);
 			materialsInSphere(modifiedValues, voxelWorldReference);

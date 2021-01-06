@@ -33,7 +33,7 @@ void FVoxelCavesWorldGeneratorInstance::Init(const FVoxelWorldGeneratorInit& Ini
 	}
 	else
 	{
-		static const FName SeedName = "MySeed";
+		const FName SeedName = "MySeed";
 		srand(time(nullptr));
 		Noise.SetSeed(InitStruct.Seeds.Contains(SeedName) ? InitStruct.Seeds[SeedName] : rand());
 
