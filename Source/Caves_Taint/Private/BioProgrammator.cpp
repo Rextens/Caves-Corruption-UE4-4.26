@@ -17,18 +17,11 @@ ABioProgrammator::ABioProgrammator()
 void ABioProgrammator::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//if (settedItem == nullptr)
-	//{
-	//	settedItem = NewObject<UItem>();
-	//	settedItem->itemName = "fgdsujfjdsi";
-	//}
 }
 
 void ABioProgrammator::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
 }
 
 void ABioProgrammator::activation()
@@ -43,9 +36,9 @@ void ABioProgrammator::activation()
 		if (programmatorWidget != nullptr && characterReference->equipment != nullptr)
 		{
 			programmatorWidget->AddToViewport();
+			characterReference->equipment->setDisplaySize(2);
 			programmatorWidget->programmatorReference = this;
-			//setItem = &programmatorWidget->testItem;
-			//setItemPointer();
+
 			programmatorWidget->initElements();
 			characterReference->equipment->AddToViewport();
 
@@ -63,12 +56,12 @@ void ABioProgrammator::activation()
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
+			
 		}
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Couldn't load"));
+		
 	}
 }
 
@@ -85,12 +78,10 @@ void ABioProgrammator::setItemPointer(UItemSlot *itemSlotReference)
 	setItems.Add(&itemSlotReference->slotItemReference);
 	itemSlotReference->slotID = setItems.Num() - 1;
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %i"), saveItems.Num()));
 	if (itemSlotReference->slotID <= saveItems.Num() - 1)
 	{
 		if (saveItems[itemSlotReference->slotID] != nullptr)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals")));
 			itemSlotReference->slotItemReference = saveItems[itemSlotReference->slotID];
 		}
 	}

@@ -18,6 +18,11 @@ void UEquipment::updateDisplay_Implementation()
 
 }
 
+void UEquipment::setDisplaySize_Implementation(int32 slots)
+{
+
+}
+
 void UEquipment::onClose()
 {
 	if(GEngine)

@@ -31,4 +31,8 @@ public:
 		virtual void updateDisplay_Implementation();
 
 		void onClose() override;
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+		void setDisplaySize(int32 slots);
+		virtual void setDisplaySize_Implementation(int32 slots);
 };

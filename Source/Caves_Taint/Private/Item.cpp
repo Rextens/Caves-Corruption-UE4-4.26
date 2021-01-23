@@ -10,4 +10,9 @@ UItem::UItem()
 	placedItemClass = APlacedRock::StaticClass();
 	stack = 1;
 	stackable = true;
+	links = 3;
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> itemHoldMesh(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_TriPyramid.Shape_TriPyramid'"));
+	inHandMesh = itemHoldMesh.Object;
+	//inHandMesh->GetBounds().GetBox().GetSize();
 }

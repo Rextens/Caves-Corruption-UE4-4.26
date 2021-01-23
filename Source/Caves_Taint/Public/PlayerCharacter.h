@@ -14,6 +14,7 @@
 #include "Equipment.h"
 #include "UsableItem.h"
 #include <map>
+#include "Utilites.h"
 #include "chunkBox.h"
 #include "PlayerCharacter.generated.h"
 
@@ -60,6 +61,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = SkeletalMesh)
 		USkeletalMeshComponent* characterMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* itemInHand;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UItem*> itemsInEquipment;
@@ -184,19 +188,16 @@ public:
 		void updateItemIndexes();
 
 	UFUNCTION(BlueprintCallable)
-		void saveCube(FVector cubeLocation);
-
-	UFUNCTION(BlueprintCallable)
 		FVector getPlayerCube();
-
-	UFUNCTION(BlueprintCallable)
-		void spawnStartingChunkCubes();
 
 	UFUNCTION(BlueprintCallable)
 		void checkChunks();
 		
 	UFUNCTION(BlueprintCallable)
 		void removeChunks();
+
+	UFUNCTION(BlueprintCallable)
+		void changeItemMeshInHand();
 
 	UFUNCTION(BlueprintCallable)
 		int32 findChunk(FVector position);
@@ -209,4 +210,5 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 renderRadius = 3;
+
 };

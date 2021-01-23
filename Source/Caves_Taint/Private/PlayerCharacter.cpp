@@ -12,7 +12,6 @@
 #include "VoxelWorld.h"
 
 
-
 // Sets default values
 APlayerCharacter::APlayerCharacter(const FObjectInitializer& objectInitializer) : Super(objectInitializer)
 {
@@ -54,6 +53,10 @@ APlayerCharacter::APlayerCharacter(const FObjectInitializer& objectInitializer) 
 		//bUseControllerRotationPitch = true;
 		characterView->bLockToHmd = true;
 	}
+	itemInHand = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Item in hand mesh"));
+	itemInHand->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_l");
+	itemInHand->AddLocalOffset(FVector(8.0f, -8.0f, 0.0f));
+
 
 	//GetMesh()
 }
@@ -295,34 +298,6 @@ int32 APlayerCharacter::isInTheInventory(FName itemID)
 
 	return -1;
 }
-/*
-void APlayerCharacter::removeItemFromEquipment(UItem* itemReference, bool removeWholeStack, int32 removeMoreThanOneItem)
-{
-	if (itemReference->stackable)
-	{
-		UStackableItem *stackableItemReference = Cast<UStackableItem>(itemReference);
-		if (removeWholeStack)
-		{
-			itemsInEquipment.RemoveAt(itemReference->equipmentIndex);
-		}
-		else
-		{
-			stackableItemReference->stack -= removeMoreThanOneItem;
-
-			if (stackableItemReference->stack == 0)
-			{
-				itemsInEquipment.RemoveAt(stackableItemReference->equipmentIndex);
-			}
-		}
-	}
-	else
-	{
-		itemsInEquipment.RemoveAt(itemReference->equipmentIndex);
-	}
-
-	updateItemIndexes();
-}
-*/
 
 void APlayerCharacter::addItemReferenceToEquipment(UItem* itemReference)
 {
@@ -470,36 +445,9 @@ void APlayerCharacter::updateItemIndexes()
 	}
 }
 
-void APlayerCharacter::saveCube(FVector cubeLocation)
-{
-
-}
-
-
 FVector APlayerCharacter::getPlayerCube()
 {
 	return FVector(floor(GetActorLocation().X / 4096.0f), floor(GetActorLocation().Y / 4096.0f), floor(GetActorLocation().Z / 4096.0f));
-}
-
-void APlayerCharacter::spawnStartingChunkCubes()
-{
-	FVector playerCube = getPlayerCube();
-	for (int i = 0; i < 3; ++i)
-	{
-		for (int j = 0; j < 3; ++j)
-		{
-			for (int k = 0; k < 3; ++k)
-			{
-				/*
-				mainBoxes[i][j][k] = GetWorld()->SpawnActor<AchunkBox>();	
-				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Some variable values: x: %f, y: %f, z: %f"), playerCube.X, playerCube.Y, playerCube.Z));
-				mainBoxes[i][j][k]->SetActorLocation(FVector((playerCube.X + i - 1) * 8192.0f,
-					(playerCube.Y + j - 1) * 8192.0f,
-					(playerCube.Z + k - 1) * 8192.0f));
-					*/
-			}
-		}
-	}
 }
 
 void APlayerCharacter::checkChunks()
@@ -550,4 +498,38 @@ int32 APlayerCharacter::findChunk(FVector position)
 		}
 	}
 	return -1;
+}
+
+void APlayerCharacter::changeItemMeshInHand()
+{
+	if (selectedItem < itemsInEquipment.Num())
+	{
+		if (itemsInEquipment[selectedItem]->inHandMesh != nullptr)
+		{
+			FVector currentSize = itemsInEquipment[selectedItem]->inHandMesh->GetBounds().GetBox().GetSize();
+			
+			float getHightestValue = currentSize.X;
+			if (currentSize.Y > getHightestValue)
+			{
+				getHightestValue = currentSize.Y;
+			}
+			if (currentSize.Z > getHightestValue)
+			{
+				getHightestValue = currentSize.Z;
+			}
+			 
+			float scale = 10 / getHightestValue;
+				
+			itemInHand->SetWorldScale3D(FVector(scale));
+			itemInHand->SetStaticMesh(itemsInEquipment[selectedItem]->inHandMesh);
+		}
+		else
+		{
+			itemInHand->SetStaticMesh(nullptr);
+		}
+	}
+	else
+	{
+		itemInHand->SetStaticMesh(nullptr);
+	}
 }

@@ -91,6 +91,8 @@ FVoxelMaterial FVoxelCavesWorldGeneratorInstance::GetMaterialImpl(v_flt X, v_flt
 	FVoxelMaterialBuilder builder;
 	builder.SetMaterialConfig(EVoxelMaterialConfig::SingleIndex);
 
+
+
 	float height = abs(Noise.GetCellular_3D(X + 0.5f, Y + 0.5f, Z + 0.5f, 0.001f)) * biomeFrequences;
 	float summedBiomesHeight = 0;
 	
