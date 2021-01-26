@@ -38,7 +38,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMesh* inHandMesh;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 links;
 };

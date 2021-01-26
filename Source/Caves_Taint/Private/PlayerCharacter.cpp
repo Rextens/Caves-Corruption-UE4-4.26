@@ -156,7 +156,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::PostInitializeComponents() {
 	Super::PostInitializeComponents();
-		
 }
 
 
