@@ -423,6 +423,38 @@ void APlayerCharacter::removeItemFromEquipment(int32 index, bool removeWholeStac
 	updateItemIndexes();
 }
 
+void APlayerCharacter::moveItems(UItem* source, UPARAM(ref) UItem*& destination, int32 stack, int32 maxStack, bool cutStack)
+{
+	if (source != nullptr)
+	{
+		if (source->stack < stack)
+		{
+			stack = source->stack;
+		}
+		if (destination != nullptr && destination->stack < maxStack)
+		{
+			if (destination->stack + stack <= maxStack)
+			{
+				if (destination->itemName == source->itemName)
+				{
+					destination->stack += stack;
+					source->stack -= stack;
+				}
+			}
+			else if (cutStack)
+			{
+
+			}
+		}
+		else if(destination == nullptr)
+		{
+			destination = DuplicateObject(source, this);
+			destination->stack = stack;
+			source->stack -= stack;
+		}
+	}
+}
+
 void APlayerCharacter::checkItemToRemove(int32 index)
 {
 	if (itemsInEquipment[index]->stackable)

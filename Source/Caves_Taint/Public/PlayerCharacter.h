@@ -182,6 +182,9 @@ public:
 		void removeItemFromEquipment(int32 index, bool removeWholeStack = false, int32 removeMoreThanOneItem = 1);
 
 	UFUNCTION(BlueprintCallable)
+		void moveItems(UItem* source, UPARAM(ref) UItem*& destination, int32 stack, int32 maxStack, bool cutStack = true);
+
+	UFUNCTION(BlueprintCallable)
 		void checkItemToRemove(int32 index);
 
 	UFUNCTION(BlueprintCallable)
