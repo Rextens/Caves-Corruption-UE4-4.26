@@ -6,6 +6,9 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "UObject/UObjectGlobals.h"
 #include "Item.h"
+#include "HAL/FileManager.h"
+#include "Misc/FileHelper.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Utilites.generated.h"
 
 /**
@@ -22,4 +25,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		static void swapItemPointers(UItem* firstItem, UItem* secondItem);
+
+	UFUNCTION(BlueprintCallable)
+		static TArray<FString> loadAllFilesFromDirectory(FString directory, FString extension);
+
+	UFUNCTION()
+		static void printString(FString text, int32 duration = 5.0f);
 };

@@ -23,7 +23,7 @@ FVoxelCavesWorldGeneratorInstance::FVoxelCavesWorldGeneratorInstance(UWorldGener
 void FVoxelCavesWorldGeneratorInstance::Init(const FVoxelWorldGeneratorInit& InitStruct)
 {
 	USaveWorld* loadWorldInstance = Cast<USaveWorld>(UGameplayStatics::CreateSaveGameObject(USaveWorld::StaticClass()));
-	loadWorldInstance = Cast<USaveWorld>(UGameplayStatics::LoadGameFromSlot(TEXT("currentSeed"), 0));
+	loadWorldInstance = Cast<USaveWorld>(UGameplayStatics::LoadGameFromSlot(TEXT("CavesCorruption/currentSeed"), 0));
 
 	if (loadWorldInstance)
 	{

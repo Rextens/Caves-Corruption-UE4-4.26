@@ -42,10 +42,10 @@ public:
 	//My variables
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool isGuiOpen = false;
+		bool isGuiOpen = false;												//true if any gui is open
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool showHUD = true;
+		bool showHUD = true;                                                //true if HUD should be visible
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool showItemStats = true;
@@ -70,15 +70,6 @@ public:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		//TArray<UItem*> itemsInToolBar;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FString currentWorldName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UItem* leftHand = nullptr;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UItem* rightHand = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int32 selectedItem = 0;
@@ -109,19 +100,20 @@ public:
 		void turnHorizontal(float value);
 
 	UFUNCTION()
-		void action();
+		void action();																													//if left click on surface, dig a hole																
 
 	UFUNCTION()
-		void placeItem();
+		void placeItem();																												//if right click on empty space, place or use holded item, if clicked on usable item,
+																																		//uses it
 
 	UFUNCTION()
-		void materialsInSphere(TArray<FModifiedVoxelValue> &modifiedValues, AVoxelWorld* voxelWorldReference);
+		void materialsInSphere(TArray<FModifiedVoxelValue> &modifiedValues, AVoxelWorld* voxelWorldReference);							//check materials ids in sphere, then give items to equipment based on these ids
 
 	UFUNCTION()
-		int32 isInTheInventory(FName itemID);
+		int32 isInTheInventory(FName itemID);																							//return the first instance of item with given name  in inventory
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UItem* dragItem;
+		UItem* dragItem;																												//currently holding item, used to drag items from one gui to another
 
 	UFUNCTION(BlueprintCallable)
 		void addItemToEquipment(FName objectID, UClass* objectClass, bool stackable, bool splitStack = false, int32 stackAmount = 1)
@@ -160,50 +152,42 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void addItemReferenceToEquipment(UItem* itemReference);
-	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	//	TSubclassOf<UEquipment> equipmentClassReference;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UEquipment *equipment;
-
-	//UFUNCTION(BlueprintCallable)
-	//	void addItemReferenceToEquipment();
+		UEquipment *equipment;;
 
 	UFUNCTION(BlueprintCallable)
-		void insertItemToEquipment(FName objectID, UClass* objectClass, bool stackable, int32 index, int32 stack);
+		void insertItemToEquipment(FName objectID, UClass* objectClass, bool stackable, int32 index, int32 stack);							//construct item, then inserts it into equipment at given index
 
 	UFUNCTION(BlueprintCallable)
-		void insertItemReferenceToEquipment(UItem *itemReference, int32 index);
-
-//	UFUNCTION(BlueprintCallable)
-//		void removeItemFromEquipment(UItem* itemReference, bool removeWholeStack = false, int32 removeMoreThanOneItem = 1);
+		void insertItemReferenceToEquipment(UItem *itemReference, int32 index);																//inserts item into equipment at given index
 
 	UFUNCTION(BlueprintCallable)
-		void removeItemFromEquipment(int32 index, bool removeWholeStack = false, int32 removeMoreThanOneItem = 1);
+		void removeItemFromEquipment(int32 index, bool removeWholeStack = false, int32 removeMoreThanOneItem = 1);							//remove item at given index, can remove whole stack or only given number
 
 	UFUNCTION(BlueprintCallable)
-		void moveItems(UItem* source, UPARAM(ref) UItem*& destination, int32 stack, int32 maxStack, bool cutStack = true);
+		void moveItems(UItem* source, UPARAM(ref) UItem*& destination, int32 stack, int32 maxStack, bool cutStack = true);					//move stacks from one UItem to another
 
 	UFUNCTION(BlueprintCallable)
-		void checkItemToRemove(int32 index);
+		void checkItemToRemove(int32 index);																								//if UItem's stack in equipment at given index is equal to 0, remove it
 
 	UFUNCTION(BlueprintCallable)
-		void updateItemIndexes();
+		void updateItemIndexes();																											//Update indexes in UItem's
 
 	UFUNCTION(BlueprintCallable)
-		FVector getPlayerCube();
+		FVector getPlayerCube();																											//return chunk, player is currently in
 
 	UFUNCTION(BlueprintCallable)
-		void checkChunks();
+		void checkChunks();																													//checks if new chunk should be spawned
 		
 	UFUNCTION(BlueprintCallable)
-		void removeChunks();
+		void removeChunks();																												//checks if chunk should be removed
 
 	UFUNCTION(BlueprintCallable)
-		void changeItemMeshInHand();
+		void changeItemMeshInHand();																										//chenge mesh in hand to the item that is currently in use
 
 	UFUNCTION(BlueprintCallable)
-		int32 findChunk(FVector position);
+		int32 findChunk(FVector position);																									//checks if chunks with given position exists, if not, return -1
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<AchunkBox*> chunks;

@@ -32,13 +32,13 @@ void AchunkBox::BeginPlay()
 void AchunkBox::onSpawned()
 {
 	APlayerCharacter* characterReference = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	FString savePath = characterReference->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
+	FString savePath = "CavesCorruption/Worlds/" + Cast<UCavesCorruptionGameInstance>(GetGameInstance())->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
 		FString::FromInt(floor(GetActorLocation().Y / 4096.0f)) + "_" +
 		FString::FromInt(floor(GetActorLocation().Z / 4096.0f));
 
 	USaveChunk* saveChunkInstance = Cast<USaveChunk>(UGameplayStatics::CreateSaveGameObject(USaveChunk::StaticClass()));
 	saveChunkInstance = Cast<USaveChunk>(UGameplayStatics::LoadGameFromSlot(savePath, 0));
-
+	
 	if (saveChunkInstance)
 	{
 		for (int i = 0; i < saveChunkInstance->placedItems.Num(); ++i)
@@ -120,7 +120,7 @@ void AchunkBox::DestroyChunk(bool saveWithoutDestroying)
 		
 		APlayerCharacter* characterReference = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
-		FString savePath = characterReference->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
+		FString savePath = "CavesCorruption/Worlds/" + Cast<UCavesCorruptionGameInstance>(GetGameInstance())->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
 			FString::FromInt(floor(GetActorLocation().Y / 4096.0f)) + "_" +
 			FString::FromInt(floor(GetActorLocation().Z / 4096.0f));
 
@@ -129,7 +129,7 @@ void AchunkBox::DestroyChunk(bool saveWithoutDestroying)
 	else
 	{
 		APlayerCharacter* characterReference = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		FString savePath = characterReference->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
+		FString savePath = "CavesCorruption/Worlds/" + Cast<UCavesCorruptionGameInstance>(GetGameInstance())->currentWorldName + "/chunks/" + "chunk_" + FString::FromInt(floor(GetActorLocation().X / 4096.0f)) + "_" +
 			FString::FromInt(floor(GetActorLocation().Y / 4096.0f)) + "_" +
 			FString::FromInt(floor(GetActorLocation().Z / 4096.0f));
 

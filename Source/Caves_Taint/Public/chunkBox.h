@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "ItemHolder.h"
 #include "SaveChunk.h"
+#include "CavesCorruptionGameInstance.h"
 #include "PlacedItemHolder.h"
 #include "chunkBox.generated.h"
 

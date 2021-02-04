@@ -125,7 +125,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (currentWorldName != "")
+	if (Cast<UCavesCorruptionGameInstance>(GetGameInstance())->currentWorldName != "")
 	{
 		checkChunks();
 		removeChunks();

@@ -11,9 +11,9 @@ NarrowCorridors::NarrowCorridors()
 
 float NarrowCorridors::generator(const FVoxelFastNoise &noise, const v_flt &X, const v_flt& Y, const v_flt& Z)
 {
-	float vX = cos(noise.GetPerlin_3D(X + 0.5f, Y + 0.5f, Z + 0.5f, 0.01f) * PI * 2);
-	float vY = -sin(noise.GetPerlin_3D(X + 0.5f, Y + 0.5f, Z + 0.5f, 0.01f) * PI * 2);
-
+	float vX = cos(noise.GetPerlinFractal_3D(X + 0.5f, Y + 0.5f, Z + 0.5f, 0.01f, 12) * PI * 2);
+	float vY = -sin(noise.GetPerlinFractal_3D(X + 0.5f, Y + 0.5f, Z + 0.5f, 0.01f, 12) * PI * 2);
+	
 	if (vX > 0 && vY > 0)
 	{
 		return vX * vY;
